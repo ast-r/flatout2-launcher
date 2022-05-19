@@ -43,6 +43,9 @@
 			this.tabPageSinglePlayer = new System.Windows.Forms.TabPage();
 			this.label2 = new System.Windows.Forms.Label();
 			this.pictureBoxFlatOutLogo = new System.Windows.Forms.PictureBox();
+			this.buttonRunSteam = new System.Windows.Forms.Button();
+			this.openFileDialogGame = new System.Windows.Forms.OpenFileDialog();
+			this.openFileDialogSteam = new System.Windows.Forms.OpenFileDialog();
 			this.mainTabControl.SuspendLayout();
 			this.tabClient.SuspendLayout();
 			this.tabServer.SuspendLayout();
@@ -66,12 +69,12 @@
 			// 
 			// buttonRun
 			// 
-			this.buttonRun.Location = new System.Drawing.Point(248, 337);
+			this.buttonRun.Location = new System.Drawing.Point(150, 337);
 			this.buttonRun.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonRun.Name = "buttonRun";
 			this.buttonRun.Size = new System.Drawing.Size(88, 27);
 			this.buttonRun.TabIndex = 1;
-			this.buttonRun.Text = "Go!";
+			this.buttonRun.Text = "Run";
 			this.buttonRun.UseVisualStyleBackColor = true;
 			this.buttonRun.Click += new System.EventHandler(this.buttonRun_Click);
 			// 
@@ -211,6 +214,27 @@
 			this.pictureBoxFlatOutLogo.TabIndex = 3;
 			this.pictureBoxFlatOutLogo.TabStop = false;
 			// 
+			// buttonRunSteam
+			// 
+			this.buttonRunSteam.Location = new System.Drawing.Point(246, 337);
+			this.buttonRunSteam.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.buttonRunSteam.Name = "buttonRunSteam";
+			this.buttonRunSteam.Size = new System.Drawing.Size(88, 27);
+			this.buttonRunSteam.TabIndex = 4;
+			this.buttonRunSteam.Text = "Run Steam";
+			this.buttonRunSteam.UseVisualStyleBackColor = true;
+			this.buttonRunSteam.Click += new System.EventHandler(this.buttonRunSteam_Click);
+			// 
+			// openFileDialogGame
+			// 
+			this.openFileDialogGame.Filter = "exe file (*.exe)|*.exe";
+			this.openFileDialogGame.Title = "Flatout 2 exe location";
+			// 
+			// openFileDialogSteam
+			// 
+			this.openFileDialogSteam.Filter = "exe file (*.exe)|*.exe";
+			this.openFileDialogSteam.Title = "Steam exe location";
+			// 
 			// FormMain
 			// 
 			this.AcceptButton = this.buttonRun;
@@ -219,6 +243,7 @@
 			this.BackColor = System.Drawing.Color.White;
 			this.CancelButton = this.buttonExit;
 			this.ClientSize = new System.Drawing.Size(347, 375);
+			this.Controls.Add(this.buttonRunSteam);
 			this.Controls.Add(this.pictureBoxFlatOutLogo);
 			this.Controls.Add(this.mainTabControl);
 			this.Controls.Add(this.buttonRun);
@@ -263,6 +288,9 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-    }
+		private System.Windows.Forms.Button buttonRunSteam;
+		private System.Windows.Forms.OpenFileDialog openFileDialogGame;
+		private System.Windows.Forms.OpenFileDialog openFileDialogSteam;
+	}
 }
 
