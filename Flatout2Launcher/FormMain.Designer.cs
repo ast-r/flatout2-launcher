@@ -39,9 +39,18 @@
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.labelMyIP = new System.Windows.Forms.Label();
 			this.tabPageOptions = new System.Windows.Forms.TabPage();
+			this.label4 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tabPageSinglePlayer = new System.Windows.Forms.TabPage();
+			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.tabPagePathBindings = new System.Windows.Forms.TabPage();
+			this.textBoxSteamPath = new System.Windows.Forms.TextBox();
+			this.buttonSetSteamPath = new System.Windows.Forms.Button();
+			this.buttonSetGamePath = new System.Windows.Forms.Button();
+			this.textBoxGamePath = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
 			this.pictureBoxFlatOutLogo = new System.Windows.Forms.PictureBox();
 			this.buttonRunSteam = new System.Windows.Forms.Button();
 			this.openFileDialogGame = new System.Windows.Forms.OpenFileDialog();
@@ -51,6 +60,7 @@
 			this.tabServer.SuspendLayout();
 			this.tabPageOptions.SuspendLayout();
 			this.tabPageSinglePlayer.SuspendLayout();
+			this.tabPagePathBindings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxFlatOutLogo)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -84,12 +94,14 @@
 			this.mainTabControl.Controls.Add(this.tabServer);
 			this.mainTabControl.Controls.Add(this.tabPageOptions);
 			this.mainTabControl.Controls.Add(this.tabPageSinglePlayer);
+			this.mainTabControl.Controls.Add(this.tabPagePathBindings);
 			this.mainTabControl.Location = new System.Drawing.Point(14, 197);
 			this.mainTabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.mainTabControl.Name = "mainTabControl";
 			this.mainTabControl.SelectedIndex = 0;
 			this.mainTabControl.Size = new System.Drawing.Size(322, 133);
 			this.mainTabControl.TabIndex = 2;
+			this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.mainTabControl_SelectedIndexChanged);
 			// 
 			// tabClient
 			// 
@@ -157,6 +169,7 @@
 			// 
 			// tabPageOptions
 			// 
+			this.tabPageOptions.Controls.Add(this.label4);
 			this.tabPageOptions.Controls.Add(this.label1);
 			this.tabPageOptions.Location = new System.Drawing.Point(4, 24);
 			this.tabPageOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -167,21 +180,35 @@
 			this.tabPageOptions.Text = "Options";
 			this.tabPageOptions.UseVisualStyleBackColor = true;
 			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(53, 50);
+			this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(210, 15);
+			this.label4.TabIndex = 1;
+			this.label4.Text = " to change FlatOut 2 Graphics settings.";
+			// 
 			// label1
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(25, 45);
+			this.label1.Location = new System.Drawing.Point(83, 35);
 			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(271, 15);
+			this.label1.Size = new System.Drawing.Size(151, 15);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Click on Go to change FlatOut 2 Graphics settings.";
+			this.label1.Text = "Click \"Run\" or \"Run Steam\"";
 			// 
 			// tabPageSinglePlayer
 			// 
+			this.tabPageSinglePlayer.Controls.Add(this.label3);
 			this.tabPageSinglePlayer.Controls.Add(this.label2);
 			this.tabPageSinglePlayer.Location = new System.Drawing.Point(4, 24);
 			this.tabPageSinglePlayer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -192,15 +219,94 @@
 			this.tabPageSinglePlayer.Text = "Single Player";
 			this.tabPageSinglePlayer.UseVisualStyleBackColor = true;
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(58, 50);
+			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(205, 15);
+			this.label3.TabIndex = 1;
+			this.label3.Text = " or \"Run Steam\" to run steam version.";
+			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(81, 45);
+			this.label2.Location = new System.Drawing.Point(54, 35);
 			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(142, 15);
+			this.label2.Size = new System.Drawing.Size(212, 15);
 			this.label2.TabIndex = 0;
-			this.label2.Text = "Click on Go to play alone.";
+			this.label2.Text = "Click \"Run\" to run downloaded version";
+			// 
+			// tabPagePathBindings
+			// 
+			this.tabPagePathBindings.Controls.Add(this.textBoxSteamPath);
+			this.tabPagePathBindings.Controls.Add(this.buttonSetSteamPath);
+			this.tabPagePathBindings.Controls.Add(this.buttonSetGamePath);
+			this.tabPagePathBindings.Controls.Add(this.textBoxGamePath);
+			this.tabPagePathBindings.Controls.Add(this.label6);
+			this.tabPagePathBindings.Controls.Add(this.label5);
+			this.tabPagePathBindings.Location = new System.Drawing.Point(4, 24);
+			this.tabPagePathBindings.Name = "tabPagePathBindings";
+			this.tabPagePathBindings.Size = new System.Drawing.Size(314, 105);
+			this.tabPagePathBindings.TabIndex = 4;
+			this.tabPagePathBindings.Text = "Paths";
+			this.tabPagePathBindings.UseVisualStyleBackColor = true;
+			// 
+			// textBoxSteamPath
+			// 
+			this.textBoxSteamPath.Location = new System.Drawing.Point(3, 71);
+			this.textBoxSteamPath.Name = "textBoxSteamPath";
+			this.textBoxSteamPath.ReadOnly = true;
+			this.textBoxSteamPath.Size = new System.Drawing.Size(227, 23);
+			this.textBoxSteamPath.TabIndex = 5;
+			// 
+			// buttonSetSteamPath
+			// 
+			this.buttonSetSteamPath.Location = new System.Drawing.Point(236, 71);
+			this.buttonSetSteamPath.Name = "buttonSetSteamPath";
+			this.buttonSetSteamPath.Size = new System.Drawing.Size(75, 23);
+			this.buttonSetSteamPath.TabIndex = 4;
+			this.buttonSetSteamPath.Text = "Set";
+			this.buttonSetSteamPath.UseVisualStyleBackColor = true;
+			this.buttonSetSteamPath.Click += new System.EventHandler(this.buttonSetSteamPath_Click);
+			// 
+			// buttonSetGamePath
+			// 
+			this.buttonSetGamePath.Location = new System.Drawing.Point(236, 27);
+			this.buttonSetGamePath.Name = "buttonSetGamePath";
+			this.buttonSetGamePath.Size = new System.Drawing.Size(75, 23);
+			this.buttonSetGamePath.TabIndex = 3;
+			this.buttonSetGamePath.Text = "Set";
+			this.buttonSetGamePath.UseVisualStyleBackColor = true;
+			this.buttonSetGamePath.Click += new System.EventHandler(this.buttonSetGamePath_Click);
+			// 
+			// textBoxGamePath
+			// 
+			this.textBoxGamePath.Location = new System.Drawing.Point(3, 27);
+			this.textBoxGamePath.Name = "textBoxGamePath";
+			this.textBoxGamePath.ReadOnly = true;
+			this.textBoxGamePath.Size = new System.Drawing.Size(227, 23);
+			this.textBoxGamePath.TabIndex = 2;
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(3, 53);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(70, 15);
+			this.label6.TabIndex = 1;
+			this.label6.Text = "Steam path:";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(3, 9);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(68, 15);
+			this.label5.TabIndex = 0;
+			this.label5.Text = "Game path:";
 			// 
 			// pictureBoxFlatOutLogo
 			// 
@@ -267,6 +373,8 @@
 			this.tabPageOptions.PerformLayout();
 			this.tabPageSinglePlayer.ResumeLayout(false);
 			this.tabPageSinglePlayer.PerformLayout();
+			this.tabPagePathBindings.ResumeLayout(false);
+			this.tabPagePathBindings.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxFlatOutLogo)).EndInit();
 			this.ResumeLayout(false);
 
@@ -291,6 +399,15 @@
 		private System.Windows.Forms.Button buttonRunSteam;
 		private System.Windows.Forms.OpenFileDialog openFileDialogGame;
 		private System.Windows.Forms.OpenFileDialog openFileDialogSteam;
+		private System.Windows.Forms.TabPage tabPagePathBindings;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox textBoxSteamPath;
+		private System.Windows.Forms.Button buttonSetSteamPath;
+		private System.Windows.Forms.Button buttonSetGamePath;
+		private System.Windows.Forms.TextBox textBoxGamePath;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label5;
 	}
 }
 

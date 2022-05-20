@@ -14,10 +14,8 @@ public partial class FormMain : Form
 {
 	private readonly List<string> ipList;
 
-	private string _steamLocation =
-		Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "/Steam/steam.exe";
-
-	private string _gameLocation = string.Empty;
+	private readonly string _steamLocation =
+		Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\Steam\steam.exe";
 
 	public FormMain()
 	{
@@ -34,18 +32,24 @@ public partial class FormMain : Form
 
 	private void LoadCustomPaths()
 	{
-		using var sr = new StreamReader(Environment.CurrentDirectory + "/filePaths.json");
+		if (!File.Exists(Environment.CurrentDirectory + @"\filePaths.json"))
+		{
+			textBoxSteamPath.Text = _steamLocation;
+			return;
+		}
+
+		using var sr = new StreamReader(Environment.CurrentDirectory + @"\filePaths.json");
 		var str = sr.ReadToEnd();
 		var json = JsonSerializer.Deserialize<CustomPaths>(str);
 		if (json is null) return;
-		_steamLocation = string.IsNullOrWhiteSpace(json.Steam) ? _steamLocation : json.Steam;
-		_gameLocation = json.Game;
+		textBoxSteamPath.Text = string.IsNullOrWhiteSpace(json.Steam) ? _steamLocation : json.Steam;
+		textBoxGamePath.Text = json.Game;
 	}
 
 	private void WriteCustomPaths()
 	{
-		using var sw = new StreamWriter(Environment.CurrentDirectory + "/filePaths.json");
-		var json = new CustomPaths(_steamLocation, _gameLocation);
+		using var sw = new StreamWriter(Environment.CurrentDirectory + @"\filePaths.json");
+		var json = new CustomPaths(textBoxSteamPath.Text, textBoxGamePath.Text);
 		var str = JsonSerializer.Serialize(json, new JsonSerializerOptions {WriteIndented = true});
 		sw.Write(str);
 	}
@@ -93,49 +97,25 @@ public partial class FormMain : Form
 		if (steam)
 		{
 			args = args.Insert(0, $"-applaunch {_flatoutSteamId} ");
-
-			if (!File.Exists(_steamLocation))
-			{
-				MessageBox.Show(
-					$"Steam can not be found in {_steamLocation}\n" +
-					"Provide custom location",
-					string.Empty,
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Information,
-					MessageBoxDefaultButton.Button1,
-					0,
-					false);
-
-				openFileDialogSteam.ShowDialog();
-
-				_steamLocation = openFileDialogSteam.FileName;
-				WriteCustomPaths();
-			}
-
-			start.FileName = _steamLocation;
+			start.FileName = textBoxSteamPath.Text;
 		}
 		else
 		{
-			if (!File.Exists(_gameLocation))
+			if (string.IsNullOrWhiteSpace(textBoxGamePath.Text))
 			{
 				MessageBox.Show(
-					$"Game can not be found in {_gameLocation}\n" +
-					"Provide custom location",
+					"The path to the game file is not specified. Set it on the \"Paths\" tab.",
 					string.Empty,
 					MessageBoxButtons.OK,
-					MessageBoxIcon.Information,
+					MessageBoxIcon.Warning,
 					MessageBoxDefaultButton.Button1,
 					0,
 					false);
-
-				openFileDialogGame.ShowDialog();
-
-				_gameLocation = openFileDialogGame.FileName;
-				WriteCustomPaths();
+				return exitCode;
 			}
 
-			start.FileName = _gameLocation;
-			start.WorkingDirectory = Path.GetDirectoryName(_gameLocation) ?? string.Empty;
+			start.FileName = textBoxGamePath.Text;
+			start.WorkingDirectory = Path.GetDirectoryName(textBoxGamePath.Text) ?? string.Empty;
 		}
 
 		start.Arguments = args;
@@ -198,6 +178,65 @@ public partial class FormMain : Form
 	private void buttonRunSteam_Click(object sender, EventArgs e)
 	{
 		Run(true);
+	}
+
+	private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+	{
+		switch (mainTabControl.SelectedIndex)
+		{
+			case 4:
+				buttonRun.Enabled = false;
+				buttonRunSteam.Enabled = false;
+				break;
+			default:
+				buttonRun.Enabled = true;
+				buttonRunSteam.Enabled = true;
+				break;
+		}
+	}
+
+	private void buttonSetGamePath_Click(object sender, EventArgs e)
+	{
+		openFileDialogGame.ShowDialog();
+		if (string.IsNullOrWhiteSpace(openFileDialogGame.FileName))
+			return;
+
+		textBoxGamePath.Text = openFileDialogGame.FileName;
+
+		var filename = Path.GetFileName(textBoxGamePath.Text);
+		if (filename != "FlatOut2.exe")
+			MessageBox.Show(
+				$"You selected \"{filename}\", but \"FlatOut2.exe\" was expected.\n" +
+				"Make sure you have selected the correct file.",
+				string.Empty,
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Information,
+				MessageBoxDefaultButton.Button1,
+				0,
+				false);
+		WriteCustomPaths();
+	}
+
+	private void buttonSetSteamPath_Click(object sender, EventArgs e)
+	{
+		openFileDialogSteam.ShowDialog();
+		if (string.IsNullOrWhiteSpace(openFileDialogSteam.FileName))
+			return;
+
+		textBoxSteamPath.Text = openFileDialogSteam.FileName;
+
+		var filename = Path.GetFileName(textBoxSteamPath.Text);
+		if (filename != "steam.exe")
+			MessageBox.Show(
+				$"You selected \"{filename}\", but \"steam.exe\" was expected.\n" +
+				"Make sure you have selected the correct file.",
+				string.Empty,
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Information,
+				MessageBoxDefaultButton.Button1,
+				0,
+				false);
+		WriteCustomPaths();
 	}
 
 	private void Run(bool steam = false)
